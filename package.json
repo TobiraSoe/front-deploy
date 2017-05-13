@@ -1,0 +1,10 @@
+{
+  "name": "public-gulp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Tobira <tobirawork@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
