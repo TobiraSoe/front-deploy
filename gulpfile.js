@@ -4,6 +4,7 @@ const stylus = require('gulp-stylus');
 const gcmq = require('gulp-group-css-media-queries');
 const autoprefixer = require('gulp-autoprefixer');
 const minify = require("gulp-csso");
+const postcss = require('gulp-postcss');
 //local server and reload
 const browserSync = require('browser-sync');
 //for images
@@ -38,6 +39,7 @@ gulp.task('styles', () => {
             cascade: false
         }))
         .pipe(gcmq())
+        .pipe(postcss([require('postcss-font-magician')({ /* options */ })]))
         .pipe(minify())
         .pipe(gulp.dest(paths.styl.dest))
         .pipe(browserSync.reload({stream: true}));
