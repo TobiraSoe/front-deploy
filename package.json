@@ -1,17 +1,23 @@
 {
   "name": "public-gulp",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "block.js",
   "author": "Tobira <tobirawork@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "b": "node block"
+  },
   "devDependencies": {
     "browser-sync": "^2.18.8",
+    "colors": "^1.1.2",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-group-css-media-queries": "^1.2.0",
     "gulp-imagemin": "^3.2.0",
+    "gulp-pug": "^3.3.0",
     "gulp-stylus": "^2.6.0",
-    "imagemin-pngquant": "^5.0.0"
+    "imagemin-pngquant": "^5.0.0",
+    "smart-grid": "^1.0.5"
   }
 }
