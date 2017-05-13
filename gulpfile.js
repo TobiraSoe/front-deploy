@@ -3,6 +3,7 @@ const gulp = require('gulp');
 const stylus = require('gulp-stylus');
 const gcmq = require('gulp-group-css-media-queries');
 const autoprefixer = require('gulp-autoprefixer');
+const minify = require("gulp-csso");
 //local server and reload
 const browserSync = require('browser-sync');
 //for images
@@ -37,6 +38,7 @@ gulp.task('styles', () => {
             cascade: false
         }))
         .pipe(gcmq())
+        .pipe(minify())
         .pipe(gulp.dest(paths.styl.dest))
         .pipe(browserSync.reload({stream: true}));
 
@@ -67,13 +69,13 @@ gulp.task('watch', ['browser-sync'], () => {
 
 });
 
-gulp.task('clean-build-dir', () => {
+gulp.task('clean-public', () => {
 
     return del(public);
 
 });
 
-gulp.task('public', ['pages', 'styles', 'watch']);
+gulp.task('public', ['clean-public', 'pages', 'styles', 'watch']);
 
 gulp.task('smart-grid', () => {
 
@@ -119,15 +121,3 @@ gulp.task('smart-grid', () => {
 });
 
 gulp.task('default', ['public']);
-
-// gulp.task('img', () => {
-//     return gulp
-//         .src(paths.src + paths.img.src)
-//         .pipe(imagemin({
-//             interlaced: true,
-//             progressive: true,
-//             svgoPlugins: [{removeViewBox: false}],
-//             use: [pngQuant()]
-//         }))
-//         .pipe(gulp.dest('dist/img'));
-// });
