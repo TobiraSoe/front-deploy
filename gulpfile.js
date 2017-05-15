@@ -11,6 +11,7 @@ const browserSync = require('browser-sync');
 const imagemin = require('gulp-imagemin');
 const pngQuant = require('imagemin-pngquant');
 //other
+const concat = require('gulp-concat');
 const pug = require('gulp-pug');
 const del = require('del');
 //path config
@@ -27,6 +28,13 @@ const paths = {
     pug: {
         src: source + '/**/*.pug',
         pages: source + '/pages/*.pug'
+    },
+
+    js: {
+        global: source + '/js/global.js',
+        blocks: source + '/blocks/**/*.js',
+        libs: source + '/js/libs/*.js',
+        dest: public + '/js/'
     }
 };
 //tasks
@@ -42,6 +50,24 @@ gulp.task('styles', () => {
         .pipe(postcss([require('postcss-font-magician')({ /* options */ })]))
         .pipe(minify())
         .pipe(gulp.dest(paths.styl.dest))
+        .pipe(browserSync.reload({stream: true}));
+
+});
+
+gulp.task('libs', () => {
+
+    return gulp.src(paths.js.libs)
+        .pipe(concat('libs.js'))
+        .pipe(gulp.dest(paths.js.dest + 'libs/'))
+        .pipe(browserSync.reload({stream: true}));
+
+});
+
+gulp.task('scripts', () => {
+
+    return gulp.src([paths.js.blocks, paths.js.global])
+        .pipe(concat('main.js'))
+        .pipe(gulp.dest(paths.js.dest))
         .pipe(browserSync.reload({stream: true}));
 
 });
@@ -67,7 +93,8 @@ gulp.task('browser-sync', () => {
 gulp.task('watch', ['browser-sync'], () => {
 
     gulp.watch([paths.styl.main, paths.styl.src], ['styles']);
-    gulp.watch(paths.pug.src, ["pages"]);
+    gulp.watch(paths.pug.src, ['pages']);
+    gulp.watch([paths.js.blocks, paths.js.global], ['scripts']);
 
 });
 
@@ -77,7 +104,7 @@ gulp.task('clean-public', () => {
 
 });
 
-gulp.task('public', ['clean-public', 'pages', 'styles', 'watch']);
+gulp.task('public', ['clean-public', 'pages', 'styles', 'scripts', 'libs', 'watch']);
 
 gulp.task('smart-grid', () => {
 
