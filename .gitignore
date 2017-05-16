@@ -38,3 +38,14 @@ jspm_packages
 
 # VS Code
 .vscode
+
+.idea/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
